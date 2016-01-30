@@ -1,0 +1,37 @@
+{
+  "id": "29C66E76-CFC9-48C5-A953-3668092F63C8",
+  "name": "PatchAssemblyInfo",
+  "friendlyName": "Patch AssemblyInfo",
+  "description": "Patch AssemblyInfo files to set the assembly version.",
+  "helpMarkDown": "[More Information](http://sycade.com)",
+  "category": "Build",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "author": "Sycade",
+  "version": {
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 0
+  },
+  "minimumAgentVersion": "1.92.0",
+  "inputs": [
+    {
+      "name": "asmVersion",
+      "type": "string",
+      "label": "Version",
+      "defaultValue": "$(Build.BuildNumber)",
+      "required": true,
+      "helpMarkDown": "Version to patch into AssemblyInfo files."
+    }
+  ],
+  "instanceNameFormat": "Patch AssemblyInfo",
+  "execution": {
+    "PowerShell": {
+      "target": "$(currentDirectory)\\PatchAssemblyInfo.ps1",
+      "argumentFormat": "",
+      "workingDirectory": "$(Build.SourcesDirectory)"
+    }
+  }
+}
