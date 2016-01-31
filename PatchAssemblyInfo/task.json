@@ -3,7 +3,6 @@
   "name": "PatchAssemblyInfo",
   "friendlyName": "Patch AssemblyInfo",
   "description": "Patch AssemblyInfo files to set the assembly version.",
-  "helpMarkDown": "[More Information](http://sycade.com)",
   "category": "Build",
   "visibility": [
     "Build",
@@ -12,7 +11,7 @@
   "author": "Sycade",
   "version": {
     "Major": 1,
-    "Minor": 0,
+    "Minor": 1,
     "Patch": 0
   },
   "minimumAgentVersion": "1.92.0",
@@ -20,10 +19,26 @@
     {
       "name": "asmVersion",
       "type": "string",
-      "label": "Version",
+      "label": "AssemblyVersion",
       "defaultValue": "$(Build.BuildNumber)",
       "required": true,
-      "helpMarkDown": "Version to patch into AssemblyInfo files."
+      "helpMarkDown": "Version to set AssemblyVersion to."
+    },
+    {
+      "name": "asmFileVersion",
+      "type": "string",
+      "label": "AssemblyFileVersion",
+      "defaultValue": "$(Build.BuildNumber)",
+      "required": true,
+      "helpMarkDown": "Version to set AssemblyFileVersion to."
+    },
+    {
+      "name": "onlyGlobal",
+      "type": "boolean",
+      "label": "Only GlobalAssemblyInfo",
+      "defaultValue": "true",
+      "required": true,
+      "helpMarkDown": "Patch only GlobalAssemblyInfo.cs files."
     }
   ],
   "instanceNameFormat": "Patch AssemblyInfo",

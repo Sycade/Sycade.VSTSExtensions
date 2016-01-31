@@ -1,21 +1,42 @@
 ﻿[CmdletBinding()]
 param (
-    [string]$asmVersion
+	[string]$onlyGlobal,
+    [string]$asmVersion,
+	[string]$asmFileVersion
 )
 
+function Patch-File {
+	param ($file)
+
+	Write-Host ("Patching file '{0}'" -f $file.FullName)
+
+	$content = Get-Content $file
+
+	if ($asmVersion) {
+		$content = $content -replace '(AssemblyVersion)\(".+"\)\]', ('$1("{0}")]' -f $asmVersion)
+	}
+
+	if ($asmFileVersion) {
+		$content = $content -replace '(AssemblyFileVersion)\(".+"\)\]', ('$1("{0}")]' -f $asmFileVersion)
+	}
+
+	Set-Content $file $content
+}
+
+
+#
+# Script
+#
+$ErrorActionPreference = "Stop"
 Write-Host "Starting PatchAssemblyInfo"
-Write-Host "asmVersion = $asmVersion"
 
-$asmFiles = Get-ChildItem -Filter "*AssemblyInfo.cs" -Recurse
+$filter = "*AssemblyInfo.cs"
+if ([bool]::Parse($onlyGlobal) -eq $true) {
+	$filter = "GlobalAssemblyInfo.cs"
+}
 
-$asmFiles | % {
-    Write-Host ("Patching file '{0}'" -f $_.FullName)
-
-    $content = Get-Content $_.FullName
-
-    $content = $content -replace '(Assembly.+?Version)\(".+"\)\]', ('$1("{0}")]' -f $asmVersion)
-
-    Set-Content $_.FullName $content
+Get-ChildItem -Filter $filter -Recurse | % {
+	Patch-File $_
 }
 
 Write-Host "Finished PatchAssemblyInfo"
