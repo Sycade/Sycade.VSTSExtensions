@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "sycade-vsts-exts",
   "name": "Sycade VSTS Extensions",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "publisher": "sycade",
   "targets": [
     {
@@ -29,6 +29,7 @@
     {
       "id": "patch-asm-info",
       "type": "ms.vss-distributed-task.task",
+	  "description": "Patches AssemblyInfo files with provided version numbers."
       "targets": [
         "ms.vss-distributed-task.tasks"
       ],

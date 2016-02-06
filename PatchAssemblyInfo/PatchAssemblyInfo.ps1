@@ -8,9 +8,11 @@ param (
 function Patch-File {
 	param ($file)
 
-	Write-Host ("Patching file '{0}'" -f $file.FullName)
-
-	$content = Get-Content $file
+	$filePath = $file.FullName
+	
+	Write-Host ("Patching file '{0}'" -f $filePath)
+	
+	$content = Get-Content $filePath
 
 	if ($asmVersion) {
 		$content = $content -replace '(AssemblyVersion)\(".+"\)\]', ('$1("{0}")]' -f $asmVersion)
@@ -20,7 +22,7 @@ function Patch-File {
 		$content = $content -replace '(AssemblyFileVersion)\(".+"\)\]', ('$1("{0}")]' -f $asmFileVersion)
 	}
 
-	Set-Content $file $content
+	Set-Content $filePath $content
 }
 
 
